@@ -1,0 +1,83 @@
+load_model: null
+
+# training settings
+num_epochs: 3000
+lr_warmup_steps: 1000
+lr: 0.0002
+lr_patience: 30
+lr_min: 1.e-07
+lr_factor: 0.8
+weight_decay: 0.0
+early_stopping_patience: 500
+loss_type: MSE
+loss_scale_y: 0.1
+loss_scale_dy: 1.0
+energy_weight: 0.25
+force_weight: 0.75
+
+dataset_arg: toluene
+dataset_root: ../data/rmd17_after
+derivative: true
+
+# dataloader specific
+reload: 0
+batch_size: 4
+inference_batch_size: 16
+standardize: true
+splits: ../data/splits/splits1.npz
+train_size: 950
+val_size: 50
+test_size: null
+num_workers: 6
+
+# model architecture specific
+model: EMolRepresentation
+output_model: Scalar
+prior_model: null
+prior_args: null
+
+# atom-electron equivariant backbone
+embedding_dimension: 256
+num_layers: 9
+num_rbf: 32
+activation: silu
+rbf_type: expnorm
+trainable_rbf: false
+attn_activation: silu
+num_heads: 8
+cutoff: 5.0
+max_z: 100
+max_num_neighbors: 32
+reduce_op: add
+lmax: 2
+vecnorm_type: none
+trainable_vecnorm: false
+vertex_type: None
+
+# electron density branch, aligned with EA5 where parameters overlap
+electron_radius: 1.0
+learnable_radius: false
+num_sample_points: 6
+atom_token_extra_neighbors: 0
+electron_grad_penalty: 0.0
+electron_gate_mode: fixed
+electron_gate: 0.15
+aeea_five_body_scale: 0.03
+aeea_five_body_use_gate: true
+ee_cutoff: 2.0
+ee_max_num_neighbors: 8
+ee_scalar_scale: 0.0
+ee_vector_scale: 0.0
+gradient_clip_val: 1.0
+gradient_clip_algorithm: norm
+
+# runtime
+ngpus: 1
+num_nodes: 1
+precision: 32
+log_dir: md17/toluene
+task: train
+seed: 1
+accelerator: gpu
+test_interval: 3000
+save_interval: 1

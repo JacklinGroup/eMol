@@ -1,0 +1,1 @@
+"""Core eMol training package."""

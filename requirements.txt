@@ -1,0 +1,10 @@
+numpy
+pyyaml
+tqdm
+torch
+torch-geometric
+torch-scatter
+torch-cluster
+pytorch-lightning>=1.7,<2.0
+torchmetrics<1.0
+tensorboard
