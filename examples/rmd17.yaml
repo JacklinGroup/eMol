@@ -12,8 +12,8 @@ early_stopping_patience: 500
 loss_type: MSE
 loss_scale_y: 0.1
 loss_scale_dy: 1.0
-energy_weight: 0.25
-force_weight: 0.75
+energy_weight: 0.05
+force_weight: 0.95
 
 dataset_arg: toluene
 dataset_root: ../data/rmd17_after
