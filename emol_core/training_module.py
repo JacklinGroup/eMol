@@ -296,7 +296,7 @@ class EMolTask(LightningModule):
         self._gate_plateau_cooldown_counter = 0
 
     def _maybe_update_electron_gate(self):
-        if getattr(self.hparams, "model", None) != "EMolRepresentation":
+        if getattr(self.hparams, "model", None) not in {"EMolRepresentation", "RAGEDSampledBlock"}:
             return
         mode = getattr(self.hparams, "electron_gate_mode", "fixed")
         if mode not in {"schedule", "lr_scale"}:
@@ -318,7 +318,7 @@ class EMolTask(LightningModule):
             representation.set_electron_gate(gate)
 
     def _maybe_update_electron_gate_on_plateau(self, val_loss):
-        if getattr(self.hparams, "model", None) != "EMolRepresentation":
+        if getattr(self.hparams, "model", None) not in {"EMolRepresentation", "RAGEDSampledBlock"}:
             return
         mode = getattr(self.hparams, "electron_gate_mode", "fixed")
         if mode != "plateau":
@@ -368,7 +368,7 @@ class EMolTask(LightningModule):
         self._gate_plateau_cooldown_counter = cooldown
 
     def _get_electron_gate_value(self):
-        if getattr(self.hparams, "model", None) != "EMolRepresentation":
+        if getattr(self.hparams, "model", None) not in {"EMolRepresentation", "RAGEDSampledBlock"}:
             return None
         representation = getattr(self.model, "representation_model", None)
         if representation is None:

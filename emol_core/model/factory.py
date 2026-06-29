@@ -7,6 +7,14 @@ from emol_core.model.readout import EquivariantScalar
 
 
 def create_model(args, mean=None, std=None):
+    # RAGEDSampledBlock is an alias for EMolRepresentation (same architecture)
+    model_name = args.get("model", "EMolRepresentation")
+
+    if model_name not in {"EMolRepresentation", "RAGEDSampledBlock"}:
+        raise ValueError(f"Unknown model '{model_name}'. "
+                         f"Available: EMolRepresentation, RAGEDSampledBlock.")
+
+    # Use .get() for all electron-specific args so YAML keys from RAGED configs work
     representation = EMolRepresentation(
         lmax=args["lmax"],
         vecnorm_type=args["vecnorm_type"],
@@ -22,19 +30,19 @@ def create_model(args, mean=None, std=None):
         max_z=args["max_z"],
         cutoff=args["cutoff"],
         max_num_neighbors=args["max_num_neighbors"],
-        vertex_type=args["vertex_type"],
-        electron_radius=args["electron_radius"],
-        learnable_radius=args["learnable_radius"],
-        num_sample_points=args["num_sample_points"],
-        atom_token_extra_neighbors=args["atom_token_extra_neighbors"],
-        electron_gate=args["electron_gate"],
-        electron_gate_mode=args["electron_gate_mode"],
-        aeea_five_body_scale=args["aeea_five_body_scale"],
-        aeea_five_body_use_gate=args["aeea_five_body_use_gate"],
-        ee_cutoff=args["ee_cutoff"],
-        ee_max_num_neighbors=args["ee_max_num_neighbors"],
-        ee_scalar_scale=args["ee_scalar_scale"],
-        ee_vector_scale=args["ee_vector_scale"],
+        vertex_type=args.get("vertex_type", None),
+        electron_radius=args.get("electron_radius", 2.0),
+        learnable_radius=args.get("learnable_radius", True),
+        num_sample_points=args.get("num_sample_points", 3),
+        atom_token_extra_neighbors=args.get("atom_token_extra_neighbors", 1),
+        electron_gate=args.get("electron_gate", 0.25),
+        electron_gate_mode=args.get("electron_gate_mode", "fixed"),
+        aeea_five_body_scale=args.get("aeea_five_body_scale", 0.0),
+        aeea_five_body_use_gate=args.get("aeea_five_body_use_gate", True),
+        ee_cutoff=args.get("ee_cutoff", None),
+        ee_max_num_neighbors=args.get("ee_max_num_neighbors", None),
+        ee_scalar_scale=args.get("ee_scalar_scale", 0.1),
+        ee_vector_scale=args.get("ee_vector_scale", 0.05),
     )
     output_model = EquivariantScalar(args["embedding_dimension"], args["activation"])
     return EMolModel(

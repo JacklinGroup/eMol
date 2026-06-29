@@ -32,6 +32,7 @@ def get_args():
     parser.add_argument("--energy-weight", type=float, default=0.25)
     parser.add_argument("--force-weight", type=float, default=0.75)
 
+    parser.add_argument("--dataset", default="rMD17")
     parser.add_argument("--dataset-root", default=None)
     parser.add_argument("--dataset-arg", default=None)
     parser.add_argument("--derivative", action=argparse.BooleanOptionalAction, default=True)
@@ -45,7 +46,8 @@ def get_args():
     parser.add_argument("--reload", type=int, default=0)
     parser.add_argument("--standardize", action=argparse.BooleanOptionalAction, default=True)
 
-    parser.add_argument("--model", default="EMolRepresentation", choices=["EMolRepresentation"])
+    parser.add_argument("--model", default="EMolRepresentation",
+                        choices=["EMolRepresentation", "RAGEDSampledBlock"])
     parser.add_argument("--output-model", default="Scalar", choices=["Scalar"])
     parser.add_argument("--prior-model", default=None)
     parser.add_argument("--prior-args", default=None)
@@ -109,6 +111,9 @@ def get_args():
     parser.add_argument("--gradient-clip-algorithm", choices=["norm", "value"], default="norm")
     parser.add_argument("--print-test-batches", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--print-test-limit", type=int, default=-1)
+    parser.add_argument("--split-mode", default=None)
+    parser.add_argument("--distributed-backend", default=None)
+    parser.add_argument("--redirect", action=argparse.BooleanOptionalAction, default=False)
     args = parser.parse_args()
     if not args.dataset_root or not args.dataset_arg:
         parser.error("dataset_root and dataset_arg must be set in the YAML or command line.")

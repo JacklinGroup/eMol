@@ -1,0 +1,90 @@
+﻿load_model: null
+
+# training settings
+num_epochs: 3000
+lr_warmup_steps: 1000
+lr: 0.0004
+lr_patience: 20
+lr_min: 1.e-07
+lr_factor: 0.8
+weight_decay: 0.0
+early_stopping_patience: 500
+loss_type: MSE
+loss_scale_y: 0.05
+loss_scale_dy: 1.0
+energy_weight: 0.05
+force_weight: 0.95
+
+# dataset specific
+dataset: MD17
+dataset_arg: aspirin
+dataset_root: ../UnifiedRAG/path/data
+derivative: true
+split_mode: null
+
+# dataloader specific
+reload: 0
+batch_size: 4
+inference_batch_size: 4
+standardize: true
+splits: null
+train_size: 950
+val_size: 50
+test_size: null
+num_workers: 12
+
+# model architecture specific
+model: RAGEDSampledBlock
+output_model: Scalar
+prior_model: null
+
+# architectural specific
+embedding_dimension: 256
+num_layers: 9
+num_rbf: 32
+activation: silu
+rbf_type: expnorm
+trainable_rbf: false
+attn_activation: silu
+num_heads: 8
+cutoff: 5.0
+max_z: 100
+max_num_neighbors: 32
+reduce_op: add
+lmax: 2
+vecnorm_type: none
+trainable_vecnorm: false
+vertex_type: None
+
+# electron density specific (RAGED parameters)
+electron_radius: 2.0
+
+# sampling specific (new for RAGEDSampled)
+num_sample_points: 3
+
+# electron gate (plateau)
+electron_gate_mode: trainable
+electron_gate: 0.5
+# electron_gate_factor: 0.8
+# electron_gate_patience: 15
+# electron_gate_threshold: 0.0
+# electron_gate_threshold_mode: rel
+# electron_gate_cooldown: 0
+# electron_gate_min: 0.1
+
+# AE/EA full QuinNet-style replacement scale
+aeea_five_body_scale: 0.05
+aeea_five_body_use_gate: true
+
+# other specific
+ngpus: -1
+num_nodes: 1
+precision: 32
+log_dir: ../logs
+task: train
+seed: 1
+distributed_backend: ddp
+redirect: false
+accelerator: gpu
+test_interval: 2000
+save_interval: 1
