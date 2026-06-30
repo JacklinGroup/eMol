@@ -1,0 +1,4 @@
+# Model checkpoints and large files
+checkpoint/
+*.ckpt
+*.tar.gz

@@ -8,6 +8,8 @@ eMol is a graph neural network that leverages **electron density information** f
 
 ## News!
 
+**\[2025/06\]** Pretrained checkpoints for rMD17 released! Download available in [Pretrained Checkpoints](#1-pretrained-checkpoints).
+
 **\[2025/06\]** Support for MD17, MD22, and QM9 datasets added. RAGED-inspired training configs included.
 
 **\[2025/05\]** eMol open-sourced on GitHub.
@@ -281,7 +283,21 @@ python train_emol.py \
 
 ## 🔥Fine-tuning / Inference
 
-#### 1. Using a Pretrained Model
+#### 1. Pretrained Checkpoints
+
+We provide pretrained eMol checkpoints for the rMD17 dataset:
+
+| Dataset | Molecules | Download |
+|---|---|---|
+| **rMD17** | aspirin, azobenzene, benzene, ethanol, malonaldehyde, naphthalene, paracetamol | [Google Drive](https://drive.google.com/file/d/1_Z8b6DoP3wY5lVMg-CmtarE3eejiurGd/view?usp=sharing) |
+
+```bash
+# Download and extract checkpoints
+mkdir -p checkpoint/rmd17
+# Extract the downloaded archive to checkpoint/rmd17/
+```
+
+#### 2. Using a Pretrained Model
 
 eMol can continue training from a checkpoint or run inference:
 
@@ -298,7 +314,7 @@ python train_emol.py \
   --load-model /path/to/checkpoint.ckpt
 ```
 
-#### 2. Output Structure
+#### 3. Output Structure
 
 Training logs and checkpoints are saved to `--log-dir`:
 
